@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131d">
+  <title>B4X-PLAY5 | Free Fire Tournaments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">B4X</span><span>B4X-PLAY5<small>TOURNAMENT ARENA</small></span></a>
+  <nav><a href="#tournaments">Tournaments</a><a href="#leaderboard">Results</a><a href="#rules">Rules</a></nav>
+  <button id="loginOpen" class="btn btn-outline">Admin login</button>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">FREE FIRE • INDIA</p>
+      <h1>PLAY HARD.<br><span>RISE TO GLORY.</span></h1>
+      <p class="muted">Find your next match, register your squad and compete in the B4X-PLAY5 arena.</p>
+      <a class="btn btn-primary" href="#tournaments">Explore tournaments <span>↗</span></a>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-label">B4X-PLAY5 / ARENA STATUS</div>
+      <div class="hero-number">05<span>+</span></div>
+      <div class="hero-caption">YOUR NEXT VICTORY STARTS HERE</div>
+      <div class="hero-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div><strong id="tournamentCount">—</strong><span>TOURNAMENTS</span></div>
+    <div><strong>SOLO / DUO / SQUAD</strong><span>GAME MODES</span></div>
+    <div><strong>INDIA</strong><span>REGION</span></div>
+  </section>
+
+  <section id="tournaments" class="section">
+    <div class="section-heading"><div><p class="eyebrow">COMPETE NOW</p><h2>Upcoming tournaments</h2></div><span class="section-note">Choose your battle</span></div>
+    <div id="tournamentGrid" class="tournament-grid"><div class="empty">Loading tournaments…</div></div>
+  </section>
+
+  <section id="leaderboard" class="section results-section">
+    <div class="section-heading"><div><p class="eyebrow">LATEST OUTCOMES</p><h2>Recent results</h2></div></div>
+    <div id="resultsList" class="results-list"><div class="empty">No results published yet.</div></div>
+  </section>
+
+  <section id="rules" class="rules section">
+    <p class="eyebrow">PLAY FAIR</p><h2>Before you queue up</h2>
+    <div class="rule-grid">
+      <article><b>01 / Correct details</b><p>Enter your in-game name, UID and valid contact details carefully.</p></article>
+      <article><b>02 / Follow room rules</b><p>Room ID, password and match instructions are shared by the tournament admin.</p></article>
+      <article><b>03 / Respect players</b><p>No cheating, abusive behaviour or deliberate match disruption.</p></article>
+    </div>
+  </section>
+</main>
+<footer><a class="brand" href="#"><span class="brand-mark">B4X</span><span>B4X-PLAY5<small>TOURNAMENT ARENA</small></span></a><span>Community tournament platform • Play fair.</span></footer>
+
+<div id="registerModal" class="modal hidden"><div class="modal-card">
+  <button class="modal-close" data-close="registerModal">×</button>
+  <p class="eyebrow">JOIN THE MATCH</p><h2 id="registerTitle">Tournament registration</h2>
+  <form id="registerForm">
+    <input type="hidden" id="tournamentId">
+    <label>Team name<input id="teamName" required maxlength="40" placeholder="Your team name"></label>
+    <label>Captain name<input id="captainName" required maxlength="40" placeholder="In-game name"></label>
+    <label>Captain Free Fire UID<input id="captainUid" required inputmode="numeric" pattern="[0-9]{5,20}" placeholder="Numeric UID"></label>
+    <label>Contact (Telegram / phone)<input id="contact" required maxlength="60" placeholder="How admin can contact you"></label>
+    <label>Player names and UIDs<textarea id="members" rows="3" placeholder="One player per line (name - UID)"></textarea></label>
+    <p class="fine">Registration is subject to admin approval. Do not enter passwords or OTPs.</p>
+    <button class="btn btn-primary full" type="submit">Submit registration</button>
+  </form>
+</div></div>
+
+<div id="loginModal" class="modal hidden"><div class="modal-card narrow">
+  <button class="modal-close" data-close="loginModal">×</button>
+  <p class="eyebrow">ADMIN AREA</p><h2>Admin sign in</h2>
+  <form id="loginForm"><label>Email<input id="adminEmail" type="email" required></label><label>Password<input id="adminPassword" type="password" required></label><button class="btn btn-primary full">Sign in</button></form>
+  <p class="fine">Admin accounts must be created in Supabase Auth and explicitly authorised in the admin_users table.</p>
+</div></div>
+
+<div id="adminPanel" class="admin-panel hidden">
+  <div class="admin-head"><div><p class="eyebrow">B4X-PLAY5 CONTROL</p><h2>Admin dashboard</h2></div><button id="logoutBtn" class="btn btn-outline">Sign out</button></div>
+  <form id="tournamentForm" class="admin-form">
+    <h3>Create tournament</h3>
+    <div class="form-grid">
+      <label>Tournament title<input id="newTitle" required maxlength="80"></label>
+      <label>Mode<select id="newMode"><option>Squad</option><option>Duo</option><option>Solo</option></select></label>
+      <label>Map<input id="newMap" placeholder="Bermuda"></label>
+      <label>Start date & time<input id="newStart" type="datetime-local" required></label>
+      <label>Entry fee (₹)<input id="newFee" type="number" min="0" value="0" required></label>
+      <label>Prize pool (₹)<input id="newPrize" type="number" min="0" value="0" required></label>
+      <label>Slots<input id="newSlots" type="number" min="2" max="500" value="48" required></label>
+      <label>Description<input id="newDescription" maxlength="250" placeholder="Tournament details"></label>
+    </div><button class="btn btn-primary">Publish tournament</button>
+  </form>
+  <div class="admin-block"><h3>Registrations</h3><div id="adminRegistrations" class="table-wrap">Sign in to view registrations.</div></div>
+  <div class="admin-block"><h3>Publish match result</h3>
+    <form id="resultForm" class="form-grid">
+      <label>Tournament<select id="resultTournament" required></select></label>
+      <label>Team name<input id="resultTeam" required></label>
+      <label>Placement<input id="resultPlacement" type="number" min="1" required></label>
+      <label>Points<input id="resultPoints" type="number" min="0" value="0" required></label>
+      <label>Kills<input id="resultKills" type="number" min="0" value="0" required></label>
+      <button class="btn btn-primary">Publish result</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden" role="status"></div>
+<script type="module" src="app.js"></script>
+</body></html>
